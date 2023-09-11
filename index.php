@@ -1,42 +1,3 @@
-<?php
-
-function get_CURL($url) {
-    
-    $curl = curl_init();
-    curl_setopt($curl, CURLOPT_URL, $url);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER , false);
-    $result = curl_exec($curl);
-    curl_close($curl);
-
-    return json_decode($result, true);
-
-}
-
-$result = get_CURL('https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=UCUA_xJfAhHgqbzv5qTommcw&key=AIzaSyAavJmZgXG9Xg-yefKrS6PYq7dG9nI-efA');
-
-$ytPP = $result['items'][0]['snippet']['thumbnails']['medium']['url'];
-$ytCN = $result['items'][0]['snippet']['title'];
-$ytSC = $result['items'][0]['statistics']['subscriberCount'];
-
-//latest video
-
-$urlLatestVideo = 'https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=UCUA_xJfAhHgqbzv5qTommcw&maxResults=2&order=date&key=AIzaSyAavJmZgXG9Xg-yefKrS6PYq7dG9nI-efA';
-$result = get_CURL($urlLatestVideo);
-
-$latestVideoId1 = $result['items'][0]['id']['videoId'];
-$latestVideoId2 = $result['items'][1]['id']['videoId'];
-
-//IG API
-$result = get_CURL('https://graph.instagram.com/me/media?fields=id,media_type,media_url,thumbnail_url,timestamp&access_token=IGQWRNRkU5XzJ0Wnp0ZA0lEZAWhvdjdHMzdUUkdoSFlBaTJ1RDhKYmtDbVA2RWRMSFdXbDQ4Vy16SllxczVNcWJINUhJckZAuTDd2elR4QlNIN1FBYW12SGVuVU8xT3lOV0ZABRi1POGdGTFhKdwZDZD');
-
-$thumbnailsIG = [];
-foreach($result['data'] as $photo) {
-    $thumbnailsIG[] = $photo['media_url'];
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -53,7 +14,6 @@ foreach($result['data'] as $photo) {
         <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
-        <script src="js/jquery.easing.1.3.js"></script>
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -66,7 +26,6 @@ foreach($result['data'] as $photo) {
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#socialmedia">Social Media</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#webport">Website Portfolio</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#desport">Design Portfolio</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">Experience</a></li>
@@ -94,59 +53,6 @@ foreach($result['data'] as $photo) {
                         <a class="social-icon" href="https://linkedin.com/in/khalif-aziz-051a90185" target="_blank"><i class="fab fa-linkedin-in"></i></a>
                         <a class="social-icon" href="https://github.com/khalif-aziz" target="_blank"><i class="fab fa-github"></i></a>
                         <a class="social-icon" href="https://facebook.com/khalifaziz91" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                    </div>
-                </div>
-            </section>
-            <hr class="m-0" />
-            <!-- Youtube & IG-->
-            <section class="resume-section" id="socialmedia">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Social Media</h2>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="row">
-                            <div class="col-md-3">
-                                <img src="<?= $ytPP; ?>" width="100" class="img-fluid rounded-circle img-thumbnail">
-                            </div>
-                            <div class="col-md-9">
-                                <h5><?= $ytCN; ?></h5>
-                                <p><?= $ytSC; ?> Subscribers</p>
-                                <div class="g-ytsubscribe" data-channelid="UCUA_xJfAhHgqbzv5qTommcw" data-layout="default" data-count="default"></div>
-                            </div>
-                            
-                            <div class="row mt-3 pb-3">
-                            <div class="col">
-                                <div class="ratio ratio-16x9">
-                                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/<?= $latestVideoId1; ?>" allowfullscreen></iframe>
-                                </div>
-                                <br>
-                                <div class="ratio ratio-16x9">
-                                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/<?= $latestVideoId2; ?>" allowfullscreen></iframe>
-                                </div>
-                            </div>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="row">
-                            <div class="col-md-3">
-                                <img src="./assets/img/ig.jpg" width="100" class="img-fluid rounded-circle img-thumbnail">
-                            </div>
-                            <div class="col-md-9">
-                                <h5>@khabib_nuraziz</h5>
-                                <p>100 Followers</p>
-                            </div>
-                            <div class="row mt-3 pb-3">
-                            <div class="col">
-                                <?php foreach($thumbnailsIG as $photo) : ?>
-                                <div class="ig-thumbnail">
-                                    <img src="<?= $photo; ?>">
-                                </div>
-                                <?php endforeach; ?>
-                            </div>
-                            </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </section>
@@ -289,6 +195,8 @@ foreach($result['data'] as $photo) {
                       />
                     </div>
                   </div>
+                </div>
+            </section>
                 </div>
             </section>
             <hr class="m-0" />
@@ -461,79 +369,16 @@ foreach($result['data'] as $photo) {
                         </div>
 
                     </section>
-                    <!--Section: Contact v.2-->
+<!--Section: Contact v.2-->
                 </div>
             </section>
-        <section class="resume-section" id="contact">
-        <div class="resume-section-content">
-        <script>
-
-function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
-  console.log('statusChangeCallback');
-  console.log(response);                   // The current login status of the person.
-  if (response.status === 'connected') {   // Logged into your webpage and Facebook.
-    testAPI();  
-  } else {                                 // Not logged into your webpage or we are unable to tell.
-    document.getElementById('status').innerHTML = 'Please log ' +
-      'into this webpage.';
-  }
-}
-
-
-function checkLoginState() {               // Called when a person is finished with the Login Button.
-  FB.getLoginStatus(function(response) {   // See the onlogin handler
-    statusChangeCallback(response);
-  });
-}
-
-
-window.fbAsyncInit = function() {
-  FB.init({
-    appId      : '693312522130464',
-    cookie     : true,                     // Enable cookies to allow the server to access the session.
-    xfbml      : true,                     // Parse social plugins on this webpage.
-    version    : 'v17.0'           // Use this Graph API version for this call.
-  });
-
-
-  FB.getLoginStatus(function(response) {   // Called after the JS SDK has been initialized.
-    statusChangeCallback(response);        // Returns the login status.
-  });
-};
-
-function testAPI() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
-  console.log('Welcome!  Fetching your information.... ');
-  FB.api('/me', function(response) {
-    console.log('Successful login for: ' + response.name);
-    document.getElementById('status').innerHTML =
-      'Thanks for logging in, ' + response.name + '!';
-  });
-}
-
-</script>
-
-
-<!-- The JS SDK Login Button -->
-
-<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-</fb:login-button>
-
-<div id="status">
-</div>
-
-<!-- Load the JS SDK asynchronously -->
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
         </div>
-        </section>
-        </div>
-        <!-- YT -->
-        <script src="https://apis.google.com/js/platform.js"></script>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Ajax core JS-->
         <script src="js/jquery-3.7.0.js"></script>
+        <script src="js/jquery.easing.1.3.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
-        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
     </body>
 </html>
