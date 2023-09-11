@@ -6754,7 +6754,7 @@ textarea.form-control-lg {
 
 .ratio {
   position: relative;
-  width: 100%;
+  width: 80%;
 }
 .ratio::before {
   display: block;
@@ -10972,17 +10972,18 @@ section.resume-section .resume-section-content {
 }
 
 section.resume-section#about,
-section.resume-section#desport,
-section.resume-section#skills {
+section.resume-section#webport,
+section.resume-section#experience,
+section.resume-section#contact {
   background-image: url('../assets/img/bg1.jpg');
   background-attachment: fixed;
   background-size: cover;
   box-shadow: inset 0 0 0 2000px rgba(255, 255, 255, 0.5);
 }
 
-section.resume-section#webport,
-section.resume-section#experience,
-section.resume-section#contact {
+section.resume-section#socialmedia,
+section.resume-section#desport,
+section.resume-section#skills {
   background-image: url('../assets/img/bg.jpg');
   background-attachment: fixed;
   background-size: cover;
@@ -11052,4 +11053,15 @@ section.resume-section#desport img.muncul,
 .expKiri.muncul {
   opacity: 1;
   transform: translate(0,0);
+}
+
+.ig-thumbnail {
+  width: 100px;
+  height: 100px;
+  float: left;
+  overflow: hidden;
+}
+
+.ig-thumbnail img {
+  width: 100px;
 }
